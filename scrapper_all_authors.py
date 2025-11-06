@@ -12,7 +12,7 @@ API_KEY = os.getenv("KEY")
 titles_and_first_author = titles_and_first_author.drop(columns=["dc:creator"])
 titles_and_first_author = titles_and_first_author.rename(columns={"dc:identifier":"identifier","dc:title":"title","prism:coverDate":"coverDate","citedby-count":"citedCount"})
 
-for item in titles_and_first_author.head().index:
+for item in titles_and_first_author.index:
     try:
         SCOPUS_ID = titles_and_first_author["identifier"][item]
 
@@ -32,5 +32,5 @@ for item in titles_and_first_author.head().index:
         continue
         #BUG WITH AMBIGIOUS DATAFRAME maybe use len(df)
 
-if titles_and_first_author:
+if titles_and_first_author is not None:
     titles_and_first_author.to_csv("list_of_authors", sep=';', encoding='utf-8', index=False, header=True)
