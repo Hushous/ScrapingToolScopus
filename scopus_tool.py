@@ -47,6 +47,7 @@ def scrape_by_search_string(key: str, params: dict, file_name: str):
             print(err)
             continue
 
+    papers["origin"] = "scopus"
     print_to_csv(file_name, papers)
 
 
@@ -54,7 +55,7 @@ def scrape_by_search_string(key: str, params: dict, file_name: str):
 scrape scopus for papers using a list of scopus ids retracted manually (for sources from other libraries)
 adds in all relevant information and all authors required
 '''
-def scrape_papers_per_id(params: dict,input_file_path: str, file_name: str):
+def scrape_papers_per_id(params: dict,input_file_path: str, file_name: str, library_name: str):
     ids = pd.read_csv(input_file_path, sep=';', encoding='utf-8')
 
     for item in ids.index:
@@ -83,13 +84,14 @@ def scrape_papers_per_id(params: dict,input_file_path: str, file_name: str):
             ids.loc[item, "subtypeDescription"] = subtype_description
             ids.loc[item, "openaccessFlag"] = open_access_flag
             ids.loc[item, "authors"] = authors
-            ids = ids[[c for c in ids.columns if c != "used"] + ["used"]] if "used" in ids.columns else ids
             print(f"Adding {SCOPUS_ID} successful")
 
         except Exception as err:
             print(err)
             continue
 
+    ids["origin"] = library_name
+    ids = ids[[c for c in ids.columns if c != "used"] + ["used"]] if "used" in ids.columns else ids
     print_to_csv(file_name, ids)
 
 '''

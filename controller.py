@@ -19,9 +19,11 @@ def scopus_per_id(library_name: str):
     params_per_id = {"apiKey": key}
     input_file_name = "ids_scopus_" + library_name
     file_path = "input_files/" + input_file_name
-    output_file_name = "list_without_used_" + library_name
+    output_file_name = library_name + "_used"
 
-    scopus_tool.scrape_papers_per_id(params_per_id,file_path,output_file_name)
+    scopus_tool.scrape_papers_per_id(params_per_id,file_path,output_file_name, library_name)
 
-#scopus_search_string()
+scopus_per_id("acm")
+scopus_per_id("ieee")
 scopus_per_id("science_direct")
+scopus_search_string()
