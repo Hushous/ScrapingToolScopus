@@ -33,5 +33,30 @@ def used_count(df: pd.DataFrame, column: str):
     plt.tight_layout()
     plt.show()
 
+def create_reading_list(df: pd.DataFrame):
+    used_papers = df[df["used"] == 1.0]
+    print(df)
 
-used_count(read_csv("literature_review.csv"), "used")
+    file_path = "done/" + "used_papers.csv"
+    used_papers.to_csv(file_path, sep=';', encoding='utf-8', index=False, header=True)
+
+def create_separate_lists(df: pd.DataFrame):
+    part1, part2, part3, part4 = np.array_split(df, 4)
+
+    file_path = "distribute/" + "eins.csv"
+    part1.to_csv(file_path, sep=';', encoding='utf-8', index=False, header=True)
+
+    file_path = "distribute/" + "zwei.csv"
+    part2.to_csv(file_path, sep=';', encoding='utf-8', index=False, header=True)
+
+    file_path = "distribute/" + "drei.csv"
+    part3.to_csv(file_path, sep=';', encoding='utf-8', index=False, header=True)
+
+    file_path = "distribute/" + "vier.csv"
+    part4.to_csv(file_path, sep=';', encoding='utf-8', index=False, header=True)
+
+#used_count(read_csv("literature_review.csv"), "used")
+
+#create_reading_list(read_csv("literature_review.csv"))
+
+create_separate_lists(read_csv("used_papers.csv"))
