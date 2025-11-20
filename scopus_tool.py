@@ -101,6 +101,3 @@ def print_to_csv(file_name: str, df: pd.DataFrame):
     if df is not None:
         file_path = "output_files/" + file_name
         df.to_csv(file_path, sep=';', encoding='utf-8', index=False, header=True)
-
-
-

@@ -57,6 +57,7 @@ def create_separate_lists(df: pd.DataFrame):
 
 #used_count(read_csv("literature_review.csv"), "used")
 
+#create_df_all()
 #create_reading_list(read_csv("literature_review.csv"))
 
-create_separate_lists(read_csv("used_papers.csv"))
+#create_separate_lists(read_csv("used_papers.csv"))

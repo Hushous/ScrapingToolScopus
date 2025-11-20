@@ -23,7 +23,11 @@ def scopus_per_id(library_name: str):
 
     scopus_tool.scrape_papers_per_id(params_per_id,file_path,output_file_name, library_name)
 
-scopus_per_id("acm")
-scopus_per_id("ieee")
-scopus_per_id("science_direct")
-scopus_search_string()
+
+def add_used_to_science_direct():
+    scopus_tool.add_used_to_science_direct()
+
+#scopus_per_id("acm")
+#scopus_per_id("ieee")
+#scopus_per_id("science_direct")
+#scopus_search_string()
