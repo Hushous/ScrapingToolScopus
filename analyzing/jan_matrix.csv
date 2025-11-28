@@ -1,0 +1,27 @@
+number;identifier;channel;push_notifications;integrated_ai;ai_chat_bot;use_government_data;use_low_cost_sensors;interpretation_capabilities;integration_of_maps;downloadable_data;upload_of_additional_data;open_access
+27;105020568148;Social Media Platform;False;False;False;False;True;True;False;False;True;True
+28;85097231160;Web Platform;True;True;False;False;True;False;True;False;True;True
+29;105009231192;Mobile App;True;True;False;True;False;True;False;False;True;True
+30;85133632204;None;False;False;False;True;True;False;False;False;False;True
+31;85174248748;Web Platform;False;False;False;True;False;True;False;False;False;True
+32;85127124711;Web Platform;False;False;False;False;True;True;False;False;False;True
+33;85198642894;None;False;True;False;True;True;False;False;False;False;True
+34;85102063335;Taxonomy;False;False;False;False;False;False;False;False;False;True
+35;105013473958;Web Platform;False;False;False;False;True;False;True;False;False;True
+36;85215112724;Web Platform;False;False;False;True;True;True;False;False;False;True
+37;85168117828;Application;False;True;False;False;True;True;True;False;True;True
+38;85203668000;Sensor Kit;False;False;False;False;True;False;False;False;False;True
+39;85178325420;Web Platform;False;True;False;False;True;True;False;False;True;True
+40;85216087596;Web Platform / Mobile App;False;False;False;False;True;True;False;False;False;True
+41;105016462142;Web Platform;False;False;False;False;True;True;True;False;False;True
+42;85205993088;Web Platform;False;False;False;False;True;True;True;False;False;True
+43;85139930068;None;False;False;False;True;True;False;False;False;False;True
+44;85142088540;None;False;False;False;False;False;False;False;False;False;False
+45;85115072004;None;False;False;False;False;False;False;False;False;False;True
+46;85218877006;None;False;False;False;False;False;False;False;False;False;True
+47;85206475423;None;False;False;False;False;False;False;False;False;False;True
+48;85207774542;Data Fusion Model;False;False;False;True;True;False;False;False;False;True
+49;85182377800;Application;False;False;False;False;True;True;False;False;False;True
+50;85107114207;None;False;False;False;False;False;False;False;False;False;True
+51;85213328119;None;False;False;False;False;False;False;False;False;False;True
+52;85076286169;None;False;False;False;False;False;False;False;False;False;True
