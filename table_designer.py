@@ -135,6 +135,7 @@ def matrix_generating(df: pd.DataFrame):
     plt.show()
 
 
+#produces two outputs, to align both pngs in the paper side by side, saving space
 def create_conversion_table():
 #   df1 = read_csv("ali.csv")
     df2 = read_csv("jan.csv")
@@ -146,23 +147,25 @@ def create_conversion_table():
     df = new_df[["number","title"]]
     df = df.rename(columns={"number": "Index", "title": "Paper Title"})
 
-    # Ensure unique index
-    df = df.reset_index(drop=True)
+    # --- 50:50 split ---
+    n = len(df) // 2
+    df_first = df.iloc[:n].reset_index(drop=True)
+    df_second = df.iloc[n:].reset_index(drop=True)
 
-    # Styling
-    styled_df = (
-        df.style
-        .hide(axis="index")  # hide the index column
+    # --- Styling for first half ---
+    styled_df_1 = (
+        df_first.style
+        .hide(axis="index")
         .set_table_styles([
-            # Header style
-            {"selector": "thead th.col0", "props": [("text-align", "center")]},  # number header
-            {"selector": "thead th.col1", "props": [("text-align", "left")]},  # title header
-            {"selector": "thead", "props": [("background-color", "#40466e"),
-                                            ("color", "white"),
-                                            ("font-weight", "bold")]},
-            # Body style
-            {"selector": "tbody td.col0", "props": [("text-align", "center")]},  # number cells
-            {"selector": "tbody td.col1", "props": [("text-align", "left")]},  # title cells
+            {"selector": "thead th.col0", "props": [("text-align", "center")]},
+            {"selector": "thead th.col1", "props": [("text-align", "left")]},
+            {"selector": "thead", "props": [
+                ("background-color", "#40466e"),
+                ("color", "white"),
+                ("font-weight", "bold")
+            ]},
+            {"selector": "tbody td.col0", "props": [("text-align", "center")]},
+            {"selector": "tbody td.col1", "props": [("text-align", "left")]},
             {"selector": "tr:nth-child(even)", "props": [("background-color", "#f2f2f2")]}
         ])
         .set_properties(**{
@@ -171,8 +174,31 @@ def create_conversion_table():
         })
     )
 
-    # Export as PNG
-    dfi.export(styled_df, "analyzing/plots/table_output.png")
+    # --- Styling for second half ---
+    styled_df_2 = (
+        df_second.style
+        .hide(axis="index")
+        .set_table_styles([
+            {"selector": "thead th.col0", "props": [("text-align", "center")]},
+            {"selector": "thead th.col1", "props": [("text-align", "left")]},
+            {"selector": "thead", "props": [
+                ("background-color", "#40466e"),
+                ("color", "white"),
+                ("font-weight", "bold")
+            ]},
+            {"selector": "tbody td.col0", "props": [("text-align", "center")]},
+            {"selector": "tbody td.col1", "props": [("text-align", "left")]},
+            {"selector": "tr:nth-child(even)", "props": [("background-color", "#f2f2f2")]}
+        ])
+        .set_properties(**{
+            "font-size": "12pt",
+            "font-family": "Times New Roman"
+        })
+    )
+
+    # --- Export each split as PNG ---
+    dfi.export(styled_df_1, "analyzing/plots/table_output_1.png")
+    dfi.export(styled_df_2, "analyzing/plots/table_output_2.png")
 
 
 def seperate_csvs():
@@ -186,6 +212,6 @@ def seperate_csvs():
 
 
 create_conversion_table()
-kind_of_artifact(prepare_df())
-matrix_generating(prepare_df())
+#kind_of_artifact(prepare_df())
+#matrix_generating(prepare_df())
 
