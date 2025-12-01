@@ -1,6 +1,6 @@
 import pandas as pd
-import pybliometrics
 from pybliometrics.scopus import AbstractRetrieval
+
 
 def bibtex_from_scopus(ar):
     """
@@ -104,7 +104,13 @@ def create_bib_from_records(input_filename, output_file="references.bib"):
     and writes a complete references.bib file.
     """
 
-    records = pd.read_csv(f"done/{input_filename}",sep=";",encoding="utf-8",usecols=["identifier"])["identifier"].astype(str).tolist()
+    records = (
+        pd.read_csv(
+            f"done/{input_filename}", sep=";", encoding="utf-8", usecols=["identifier"]
+        )["identifier"]
+        .astype(str)
+        .tolist()
+    )
     bib_entries = []
 
     for scopus_id in records:
@@ -130,5 +136,6 @@ def create_bib_from_records(input_filename, output_file="references.bib"):
 
     print(f"\n Written {len(bib_entries)} entries to {output_file}")
 
-#pybliometrics.init()
-#create_bib_from_records("used_papers.csv")
+
+# pybliometrics.init()
+# create_bib_from_records("used_papers.csv")
