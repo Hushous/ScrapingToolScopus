@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import dataframe_image as dfi
 
+
 def read_csv(document_name):
     folder = "analyzing/"
     library_name = "jan_matrix.csv"
@@ -11,7 +12,7 @@ def read_csv(document_name):
 
 
 def prepare_df():
-    #df1 = read_csv("ali_matrix.csv")
+    # df1 = read_csv("ali_matrix.csv")
     df2 = read_csv("jan_matrix.csv")
     df3 = read_csv("pascal_matrix.csv")
     df4 = read_csv("volkan_matrix.csv")
@@ -30,7 +31,7 @@ def prepare_df():
         "interpretation_capabilities",
         "integration_of_maps",
         "downloadable_data",
-        "upload_of_additional_data"
+        "upload_of_additional_data",
     ]
 
     df.drop("open_access", axis=1, inplace=True)
@@ -40,6 +41,7 @@ def prepare_df():
     df[cols] = df[cols].replace({"True": True, "False": False})
 
     return df
+
 
 # Done
 def kind_of_artifact(df: pd.DataFrame):
@@ -56,30 +58,27 @@ def kind_of_artifact(df: pd.DataFrame):
 
     plt.figure(figsize=(12, 6))
 
+    # Test
+
     # Create Seaborn barplot
-    ax = sns.barplot(
-        data=counts,
-        x="channel",
-        y="count",
-        edgecolor="gray"
-    )
+    ax = sns.barplot(data=counts, x="channel", y="count", edgecolor="gray")
 
     # Rotate x-axis labels for readability
-    ax.set_xticklabels(ax.get_xticklabels(), rotation=45, ha='right')
+    ax.set_xticklabels(ax.get_xticklabels(), rotation=45, ha="right")
 
     # Titles and labels
-    plt.title("Kind of Artifacts in Findings", fontsize=16, weight='bold')
+    plt.title("Kind of Artifacts in Findings", fontsize=16, weight="bold")
     plt.xlabel("Providing Channels", fontsize=12)
     plt.ylabel("Number of Occurrences", fontsize=12)
 
     # Optional: add value labels on top of bars
     for p in ax.patches:
         ax.annotate(
-            f'{int(p.get_height())}',
-            (p.get_x() + p.get_width() / 2., p.get_height()),
-            ha='center',
-            va='bottom',
-            fontsize=10
+            f"{int(p.get_height())}",
+            (p.get_x() + p.get_width() / 2.0, p.get_height()),
+            ha="center",
+            va="bottom",
+            fontsize=10,
         )
 
     plt.tight_layout()
@@ -91,14 +90,21 @@ def matrix_generating(df: pd.DataFrame):
     # Requirement columns
     requirement_cols = [
         "channel",
-        "push_notifications", "integrated_ai", "ai_chat_bot",
-        "use_government_data", "use_low_cost_sensors",
-        "interpretation_capabilities", "integration_of_maps",
-        "downloadable_data", "upload_of_additional_data"
+        "push_notifications",
+        "integrated_ai",
+        "ai_chat_bot",
+        "use_government_data",
+        "use_low_cost_sensors",
+        "interpretation_capabilities",
+        "integration_of_maps",
+        "downloadable_data",
+        "upload_of_additional_data",
     ]
 
     # Make 'channel' the first column, sort the rest
-    requirement_cols = ["channel"] + sorted([c for c in requirement_cols if c != "channel"])
+    requirement_cols = ["channel"] + sorted(
+        [c for c in requirement_cols if c != "channel"]
+    )
 
     df["channel"] = df["channel"].notna()
 
@@ -113,29 +119,23 @@ def matrix_generating(df: pd.DataFrame):
     # Green/red palette
     cmap = sns.color_palette(["#ffcccc", "#ccffcc"])  # red=False, green=True
 
-    ax = sns.heatmap(
-        matrix,
-        cmap=cmap,
-        cbar=False,
-        linewidths=0.5,
-        linecolor="grey"
-    )
+    ax = sns.heatmap(matrix, cmap=cmap, cbar=False, linewidths=0.5, linecolor="grey")
 
     plt.title("Requirement Matrix per Number")
     plt.xlabel("Number")
     plt.ylabel("Requirement")
 
     # Y-axis labels horizontal
-    ax.set_yticklabels(ax.get_yticklabels(), rotation=0, ha='right')
+    ax.set_yticklabels(ax.get_yticklabels(), rotation=0, ha="right")
     # X-axis labels rotated for readability
-    ax.set_xticklabels(ax.get_xticklabels(), rotation=45, ha='right')
+    ax.set_xticklabels(ax.get_xticklabels(), rotation=45, ha="right")
 
     plt.tight_layout()
     plt.savefig("analyzing/plots/heatmap.png", dpi=300, bbox_inches="tight")
     plt.show()
 
 
-#produces two outputs, to align both pngs in the paper side by side, saving space
+# produces two outputs, to align both pngs in the paper side by side, saving space
 def create_conversion_table():
     df1 = read_csv("ali.csv")
     df2 = read_csv("jan.csv")
@@ -144,7 +144,7 @@ def create_conversion_table():
 
     new_df = pd.concat([df1, df2, df3, df4])
 
-    df = new_df[["number","title"]]
+    df = new_df[["number", "title"]]
     df = df.rename(columns={"number": "Index", "title": "Paper Title"})
 
     # --- 50:50 split ---
@@ -154,46 +154,54 @@ def create_conversion_table():
 
     # --- Styling for first half ---
     styled_df_1 = (
-        df_first.style
-        .hide(axis="index")
-        .set_table_styles([
-            {"selector": "thead th.col0", "props": [("text-align", "center")]},
-            {"selector": "thead th.col1", "props": [("text-align", "left")]},
-            {"selector": "thead", "props": [
-                ("background-color", "#40466e"),
-                ("color", "white"),
-                ("font-weight", "bold")
-            ]},
-            {"selector": "tbody td.col0", "props": [("text-align", "center")]},
-            {"selector": "tbody td.col1", "props": [("text-align", "left")]},
-            {"selector": "tr:nth-child(even)", "props": [("background-color", "#f2f2f2")]}
-        ])
-        .set_properties(**{
-            "font-size": "12pt",
-            "font-family": "Times New Roman"
-        })
+        df_first.style.hide(axis="index")
+        .set_table_styles(
+            [
+                {"selector": "thead th.col0", "props": [("text-align", "center")]},
+                {"selector": "thead th.col1", "props": [("text-align", "left")]},
+                {
+                    "selector": "thead",
+                    "props": [
+                        ("background-color", "#40466e"),
+                        ("color", "white"),
+                        ("font-weight", "bold"),
+                    ],
+                },
+                {"selector": "tbody td.col0", "props": [("text-align", "center")]},
+                {"selector": "tbody td.col1", "props": [("text-align", "left")]},
+                {
+                    "selector": "tr:nth-child(even)",
+                    "props": [("background-color", "#f2f2f2")],
+                },
+            ]
+        )
+        .set_properties(**{"font-size": "12pt", "font-family": "Times New Roman"})
     )
 
     # --- Styling for second half ---
     styled_df_2 = (
-        df_second.style
-        .hide(axis="index")
-        .set_table_styles([
-            {"selector": "thead th.col0", "props": [("text-align", "center")]},
-            {"selector": "thead th.col1", "props": [("text-align", "left")]},
-            {"selector": "thead", "props": [
-                ("background-color", "#40466e"),
-                ("color", "white"),
-                ("font-weight", "bold")
-            ]},
-            {"selector": "tbody td.col0", "props": [("text-align", "center")]},
-            {"selector": "tbody td.col1", "props": [("text-align", "left")]},
-            {"selector": "tr:nth-child(even)", "props": [("background-color", "#f2f2f2")]}
-        ])
-        .set_properties(**{
-            "font-size": "12pt",
-            "font-family": "Times New Roman"
-        })
+        df_second.style.hide(axis="index")
+        .set_table_styles(
+            [
+                {"selector": "thead th.col0", "props": [("text-align", "center")]},
+                {"selector": "thead th.col1", "props": [("text-align", "left")]},
+                {
+                    "selector": "thead",
+                    "props": [
+                        ("background-color", "#40466e"),
+                        ("color", "white"),
+                        ("font-weight", "bold"),
+                    ],
+                },
+                {"selector": "tbody td.col0", "props": [("text-align", "center")]},
+                {"selector": "tbody td.col1", "props": [("text-align", "left")]},
+                {
+                    "selector": "tr:nth-child(even)",
+                    "props": [("background-color", "#f2f2f2")],
+                },
+            ]
+        )
+        .set_properties(**{"font-size": "12pt", "font-family": "Times New Roman"})
     )
 
     # --- Export each split as PNG ---
@@ -204,14 +212,33 @@ def create_conversion_table():
 def seperate_csvs():
     df = read_csv("volkan_matrix.csv")
 
-    df = df[["number","identifier","channel","push_notifications","integrated_ai","ai_chat_bot","use_government_data","use_low_cost_sensors","interpretation_capabilities","integration_of_maps","downloadable_data","upload_of_additional_data"]]
+    df = df[
+        [
+            "number",
+            "identifier",
+            "channel",
+            "push_notifications",
+            "integrated_ai",
+            "ai_chat_bot",
+            "use_government_data",
+            "use_low_cost_sensors",
+            "interpretation_capabilities",
+            "integration_of_maps",
+            "downloadable_data",
+            "upload_of_additional_data",
+        ]
+    ]
     print(df)
 
-    df.to_csv("analyzing/volkan_matrix.csv", sep=';', encoding='utf-8', index=False, header=True)
-
+    df.to_csv(
+        "analyzing/volkan_matrix.csv",
+        sep=";",
+        encoding="utf-8",
+        index=False,
+        header=True,
+    )
 
 
 create_conversion_table()
-#kind_of_artifact(prepare_df())
-#matrix_generating(prepare_df())
-
+# kind_of_artifact(prepare_df())
+# matrix_generating(prepare_df())
