@@ -1,0 +1,27 @@
+number;identifier;channel;push_notifications;integrated_ai;ai_chat_bot;use_government_data;use_low_cost_sensors;interpretation_capabilities;integration_of_maps;downloadable_data;upload_of_additional_data
+79;85094132318;Mobile App;True;True;False;True;True;True;True;True;True;False
+80;105013463140;Web Platform;False;True;False;True;True;True;True;True;True;False
+81;85112266275;Scientific Study & Methodology;False;False;False;True;True;True;True;False;True;False
+82;85138138896;Web Platform;False;False;False;True;False;True;True;True;False;True
+83;85094824495;Web Platform & Mobile App;False;False;False;True;False;True;True;False;False;False
+84;85087924481;Web Platform;False;False;False;True;True;True;True;True;True;True
+85;85174387529;Mobile App;True;True;False;True;True;True;True;False;True;False
+86;85215251198;Hardware & IoT;False;False;False;False;True;True;True;True;True;False
+87;85174241238;Game/AR/VR;True;False;False;False;False;True;True;False;False;False
+88;85186524383;Mobile App;False;True;False;True;False;True;True;False;False;False
+89;85207044719;Web Platform;False;False;False;True;True;True;True;True;True;False
+90;85122994727;Web Platform;True;False;False;False;True;True;True;False;False;False
+91;85172012036;Web Platform;False;False;False;True;False;True;True;False;False;False
+92;85145349941;Scientific Study & Methodology;False;False;False;False;False;True;False;False;False;False
+93;85218027929;Web Platform;False;False;False;True;False;True;True;True;False;False
+94;85139392942;Hardware & IoT;False;True;False;True;True;True;True;True;True;False
+95;85122348896;Scientific Study & Methodology;False;False;False;True;True;True;True;True;False;False
+96;86000445492;Scientific Study & Methodology;False;False;False;True;True;True;True;False;False;False
+97;85090578172;Software Library;False;False;False;True;True;True;True;True;True;True
+98;85202895097;Mobile App;True;False;False;False;True;True;True;True;True;False
+99;105021079912;Web Platform;False;False;False;False;True;True;True;True;True;True
+100;85097873262;Framework;False;False;False;False;True;True;False;False;False;False
+101;85143913348;Initiative;False;True;False;True;True;True;True;False;False;False
+102;85212417350;Scientific Study & Methodology;False;False;False;True;True;True;True;False;False;False
+103;85109881954;Scientific Study & Methodology;False;False;False;False;True;True;True;False;True;False
+104;85105658638;Scientific Study & Methodology;False;True;False;True;False;True;False;False;True;False

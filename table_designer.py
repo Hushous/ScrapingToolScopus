@@ -137,12 +137,12 @@ def matrix_generating(df: pd.DataFrame):
 
 #produces two outputs, to align both pngs in the paper side by side, saving space
 def create_conversion_table():
-#   df1 = read_csv("ali.csv")
+    df1 = read_csv("ali.csv")
     df2 = read_csv("jan.csv")
     df3 = read_csv("pascal.csv")
     df4 = read_csv("volkan.csv")
 
-    new_df = pd.concat([df2, df3, df4])
+    new_df = pd.concat([df1, df2, df3, df4])
 
     df = new_df[["number","title"]]
     df = df.rename(columns={"number": "Index", "title": "Paper Title"})
