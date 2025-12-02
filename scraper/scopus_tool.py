@@ -1,0 +1,196 @@
+import os
+import pandas as pd
+import requests
+from ScopusScrapus import ScopusSearchQuery
+from constants import constants_scopus_tool
+
+
+def scrape_by_search_string():
+    """
+    do scopus search by query string derived from .env.
+    outputs scopus_id as identifier, title, coverDate, citeCount, subTypeDescription, openAccessFlag and authors
+    """
+
+    key = os.getenv("KEY", "No Key established in .env")
+    query_str = os.getenv("QUERYSTRING", "No Query String established in .env")
+    params = {"query": query_str, "count": 25, "view": "STANDARD"}
+
+    # create dataframe from search string
+    papers = __search_scopus(key, params)
+
+    # only for testing
+    # papers = papers.head()
+
+    for item in papers.index:
+        try:
+            scopus_id = str(papers["identifier"][item])
+
+            json_resp = __request_scopus_paper(key, scopus_id)
+
+            authors = __author_join(json_resp)
+
+            papers.loc[item, constants_scopus_tool.AUTHORS] = authors
+            print(f"Adding {scopus_id} successful")
+
+        except Exception as err:
+            print(err)
+            continue
+
+    # adds a column of the origin as scopus to reidentify
+    papers["origin"] = "scopus"
+
+    filename = constants_scopus_tool.FILENAME_SCOPUS_QUERY
+    print_to_csv(filename, papers)
+
+
+def scrape_papers_per_id(library_name: str):
+    """
+
+    :param input_file_path: .csv file with column identifier (containing scopus ids as str)
+    :param file_name: name of the output_file
+    :param library_name: name of the scraped library
+    """
+
+    key = os.getenv("Key", "No Key established in .env")
+
+    input_file_path = constants_scopus_tool.FILEPATH_INPUT_OTHER_SEARCH
+    filename = constants_scopus_tool.FILENAME_BASE_SEARCH + library_name + ".csv"
+    input = input_file_path + filename
+
+    ids = pd.read_csv(input, sep=";", encoding="utf-8")
+
+    for item in ids.index:
+        try:
+            scopus_id = str(ids["identifier"][item])
+
+            json_resp = __request_scopus_paper(key, scopus_id)
+
+            core = json_resp.get("abstracts-retrieval-response", {}).get("coredata", {})
+
+            ids.loc[item, constants_scopus_tool.TITLE] = core.get("dc:title") or None
+            ids.loc[item, constants_scopus_tool.COVER_DATE] = (
+                core.get("prism:coverDate") or None
+            )
+            ids.loc[item, constants_scopus_tool.CITED_COUNT] = (
+                int(core.get("citedby-count", 0)) if core.get("citedby-count") else None
+            )
+            ids.loc[item, constants_scopus_tool.SUBTYPE_DESCRIPTION] = (
+                core.get("subtypeDescription") or None
+            )
+            ids.loc[item, constants_scopus_tool.OPEN_ACCESS_FLAG] = (
+                True if core.get("openaccessFlag") == "true" else False
+            )
+
+            authors = __author_join(json_resp)
+            ids.loc[item, constants_scopus_tool.AUTHORS] = authors
+
+            print(f"Adding {scopus_id} successful")
+
+        except Exception as err:
+            print(err)
+            continue
+
+    ids["origin"] = library_name
+    ids = (
+        ids[[c for c in ids.columns if c != "used"] + ["used"]]
+        if "used" in ids.columns
+        else ids
+    )
+
+    filename = constants_scopus_tool.FILENAME_BASE_NOT_SCOPUS + library_name
+    print_to_csv(filename, ids)
+
+
+def print_to_csv(file_name: str, df: pd.DataFrame):
+    """
+    :param file_name: Name of the file (with or without .csv)
+    :param df: DataFrame to write
+    """
+    if df is not None:
+        # Add .csv only if not already present (case-insensitive)
+        if not file_name.lower().endswith(".csv"):
+            file_name += ".csv"
+
+        file_path = constants_scopus_tool.FILEPATH_OUTPUT_SCOPUS_SEARCH + file_name
+
+        # create parent folder on the fly
+        os.makedirs(os.path.dirname(file_path), exist_ok=True)
+
+        df.to_csv(file_path, sep=";", encoding="utf-8", index=False, header=True)
+
+
+def __search_scopus(key: str, params: dict) -> pd.DataFrame:
+    """
+    searches for all relevant papers to a query string derived from .env.
+    :param key: api key of scopus
+    :param params: dict of parameters to put for the search
+    :return: dataframe of relevant information about searched papers
+    """
+    ssq = ScopusSearchQuery(key, params)
+    records = []
+
+    try:
+        for paper in ssq:
+            records.append(paper)  # each paper is usually a dict
+    except Exception as e:
+        print("Error while fetching Scopus results:", e)
+
+    papers = pd.DataFrame(records)
+    print("Retrieved", len(papers), "papers")
+
+    papers = papers[
+        [
+            "dc:identifier",
+            "dc:title",
+            "prism:coverDate",
+            "citedby-count",
+            "subtypeDescription",
+            "openaccessFlag",
+        ]
+    ]
+
+    papers = papers.rename(
+        columns={
+            "dc:identifier": constants_scopus_tool.IDENTIFIER,
+            "dc:title": constants_scopus_tool.TITLE,
+            "prism:coverDate": constants_scopus_tool.COVER_DATE,
+            "citedby-count": constants_scopus_tool.CITED_COUNT,
+            "subtypeDescription": constants_scopus_tool.SUBTYPE_DESCRIPTION,
+            "openaccessFlag": constants_scopus_tool.OPEN_ACCESS_FLAG,
+        }
+    )
+
+    papers[constants_scopus_tool.IDENTIFIER] = papers[
+        constants_scopus_tool.IDENTIFIER
+    ].str.replace("SCOPUS_ID:", "", regex=False)
+
+    return papers
+
+
+def __request_scopus_paper(key: str, identifier: str):
+
+    response = requests.get(
+        f"https://api.elsevier.com/content/abstract/scopus_id/{identifier}",
+        headers={"Accept": "application/json"},
+        params={"apiKey": key},
+    )
+    json_resp = response.json()
+
+    return json_resp
+
+
+def __author_join(json_resp: any) -> str:
+    authors = (
+        ", ".join(
+            f"{a['preferred-name'].get('ce:given-name', '')} {a['preferred-name'].get('ce:surname', '')}".strip()
+            for a in json_resp.get("abstracts-retrieval-response", {})
+            .get("authors", {})
+            .get("author", [])
+        )
+        or None
+    )
+
+    return authors
+
+
+
