@@ -1,11 +1,14 @@
 import os
+
+import numpy as np
 import pandas as pd
 import requests
 from ScopusScrapus import ScopusSearchQuery
+
 from constants import constants_scopus_tool
 
 
-def scrape_by_search_string():
+def scrape_by_search_string(long_version: bool):
     """
     do scopus search by query string derived from .env.
     outputs scopus_id as identifier, title, coverDate, citeCount, subTypeDescription, openAccessFlag and authors
@@ -18,8 +21,9 @@ def scrape_by_search_string():
     # create dataframe from search string
     papers = __search_scopus(key, params)
 
-    # only for testing
-    # papers = papers.head()
+    # for testing purposes
+    if not long_version:
+        papers = papers.head()
 
     for item in papers.index:
         try:
@@ -43,7 +47,7 @@ def scrape_by_search_string():
     print_to_csv(filename, papers)
 
 
-def scrape_papers_per_id(library_name: str):
+def scrape_papers_per_id(library_name: str, long_version: bool):
     """
 
     :param input_file_path: .csv file with column identifier (containing scopus ids as str)
@@ -53,11 +57,15 @@ def scrape_papers_per_id(library_name: str):
 
     key = os.getenv("Key", "No Key established in .env")
 
-    input_file_path = constants_scopus_tool.FILEPATH_INPUT_OTHER_SEARCH
+    input_file_path = constants_scopus_tool.FILEPATH_INPUT_OTHER_SEARCH + "/"
     filename = constants_scopus_tool.FILENAME_BASE_SEARCH + library_name + ".csv"
     input = input_file_path + filename
 
     ids = pd.read_csv(input, sep=";", encoding="utf-8")
+
+    # only use 5 papers for testing purposes
+    if not long_version:
+        ids = ids.head()
 
     for item in ids.index:
         try:
@@ -111,12 +119,50 @@ def print_to_csv(file_name: str, df: pd.DataFrame):
         if not file_name.lower().endswith(".csv"):
             file_name += ".csv"
 
-        file_path = constants_scopus_tool.FILEPATH_OUTPUT_SCOPUS_SEARCH + file_name
+        file_path = (
+            constants_scopus_tool.FILEPATH_OUTPUT_SCOPUS_SEARCH + "/" + file_name
+        )
 
         # create parent folder on the fly
         os.makedirs(os.path.dirname(file_path), exist_ok=True)
 
         df.to_csv(file_path, sep=";", encoding="utf-8", index=False, header=True)
+
+
+def create_continuous_list():
+    """
+    Reads all .csv or .CSV files in a folder, concatenates them,
+    ensures 'used' column exists, and fills missing entries with NaN.
+    Saves the combined CSV to output_file.
+    """
+
+    folder_path = constants_scopus_tool.FILEPATH_OUTPUT_SCOPUS_SEARCH
+
+    csv_files = [f for f in os.listdir(folder_path) if f.lower().endswith(".csv")]
+
+    if not csv_files:
+        raise ValueError("No CSV files found in the specified folder.")
+
+    dataframes = []
+
+    column = constants_scopus_tool.USED
+
+    for file in csv_files:
+        full_path = os.path.join(folder_path, file)
+        df = pd.read_csv(full_path, sep=";", encoding="utf-8")
+
+        # Ensure the 'used' column exists
+        if column not in df.columns:
+            df[column] = np.nan
+        else:
+            # Fill missing values in the column
+            df[column] = df[column].fillna(np.nan)
+
+        dataframes.append(df)
+
+    combined_df = pd.concat(dataframes, ignore_index=True)
+
+    print_to_csv(constants_scopus_tool.FILENAME_ALL, combined_df)
 
 
 def __search_scopus(key: str, params: dict) -> pd.DataFrame:
@@ -191,6 +237,3 @@ def __author_join(json_resp: any) -> str:
     )
 
     return authors
-
-
-

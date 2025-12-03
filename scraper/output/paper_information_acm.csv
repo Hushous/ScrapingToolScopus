@@ -1,18 +1,6 @@
 identifier;title;cover_date;cited_count;subtype_description;open_access_flag;authors;origin;used
-105020568148;;;;;False;;acm;True
-85128418579;;;;;False;;acm;False
-85097231160;;;;;False;;acm;True
-85161470565;;;;;False;;acm;False
-105009231192;;;;;False;;acm;True
-85133632204;;;;;False;;acm;True
-85174248748;;;;;False;;acm;True
-85127124711;;;;;False;;acm;True
-85211376808;;;;;False;;acm;False
-85198642894;;;;;False;;acm;True
-85146367510;;;;;False;;acm;False
-85146308992;;;;;False;;acm;False
-85137594900;;;;;False;;acm;False
-85102063335;;;;;False;;acm;True
-85192198334;;;;;False;;acm;False
-85209239146;;;;;False;;acm;False
-85091280338;;;;;False;;acm;False
+105020568148;Multi-dimensional Engagement for Richer Hyperlocal Citizen Science Data;2025-10-01;0.0;Conference Paper;True;Abhishek Viswanathan, Vasco Xu, Amy Babay, Rosta Farzan, Aaron Birdy;acm;True
+85128418579;Instagram of Rivers: Facilitating Distributed Collaboration in Hyperlocal Citizen Science;2022-04-07;7.0;Article;False;Srishti Gupta, Julia Jablonski, Chun Hua Tsai, John M. Carroll;acm;False
+85097231160;Smell Pittsburgh: Engaging Community Citizen Science for AirQuality;2020-01-01;27.0;Article;False;Yen Chia Hsu, Jennifer Cross, Paul Dille, Michael Tasota, Beatrice Dias, Randy Sargent, Ting Hao (Kenneth) Huang, Illah Nourbakhsh;acm;True
+85161470565;Revealing the role of values in developing a garden data ecosystem through a reflective participatory design approach;2023-05-29;0.0;Conference Paper;True;Silvia Cazacu, Ingrid Mulder, Andrew Vande Moere, Thérèse Steenberghen;acm;False
+105009231192;Use of Air Quality Sensor Network Data for Real-time Pollution-Aware POI Suggestion;2025-05-23;1.0;Conference Paper;True;Giuseppe Fasano, Yashar Deldjoo, Tommaso di Noia, Bianca Lau, Sina Adham-Khiabani, Eric Morris, Xia Liu, Ganga Chinna Rao Devarapu, Liam O'Faolain;acm;True
