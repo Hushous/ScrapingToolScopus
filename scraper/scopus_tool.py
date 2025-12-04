@@ -149,7 +149,8 @@ def __create_continuous_list():
     """
     Reads all .csv or .CSV files in a folder, concatenates them,
     ensures 'used' column exists, and fills missing entries with NaN.
-    Saves the combined CSV to output_file.
+    Throws out duplicate entries to ensure a unique titles list
+    Saves the combined CSV to a .csv.
     """
 
     folder_path = constants_scopus_tool.FILEPATH_OUTPUT_SCOPUS_SEARCH
@@ -178,7 +179,10 @@ def __create_continuous_list():
 
     combined_df = pd.concat(dataframes, ignore_index=True)
 
-    print_to_csv(constants_scopus_tool.FILENAME_ALL, combined_df)
+    # drop duplicate titles
+    unique_df = combined_df.drop_duplicates(subset=["title"], inplace=False)
+
+    print_to_csv(constants_scopus_tool.FILENAME_ALL, unique_df)
 
 
 def __search_scopus(key: str, params: dict) -> pd.DataFrame:
