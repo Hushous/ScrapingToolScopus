@@ -21,3 +21,6 @@ FILENAME_ACM = "acm"
 FILENAME_IEEE = "ieee"
 FILENAME_SCIENCE_DIRECT = "science_direct"
 FILENAME_ALL = "list_all"
+
+# Bib_Tex
+FOLDER_PATH_REFERENCES = "bib_tex/output"

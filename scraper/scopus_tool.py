@@ -8,6 +8,23 @@ from ScopusScrapus import ScopusSearchQuery
 from constants import constants_scopus_tool
 
 
+def create_all_paper_csv(long_version: bool, databases: list):
+    """
+    create the full csv list, looking for all databases inserted.
+    :param databases: list of all databases name (used in names of .csv data)
+    :param long_version:
+    """
+    scrape_by_search_string(long_version)
+
+    for item in databases:
+        scrape_papers_per_id(item, long_version)
+
+    try:
+        __create_continuous_list()
+    except Exception as err:
+        print(f"Something went wrong!: {err}")
+
+
 def scrape_by_search_string(long_version: bool):
     """
     do scopus search by query string derived from .env.
@@ -49,9 +66,8 @@ def scrape_by_search_string(long_version: bool):
 
 def scrape_papers_per_id(library_name: str, long_version: bool):
     """
-
-    :param input_file_path: .csv file with column identifier (containing scopus ids as str)
-    :param file_name: name of the output_file
+    scrape paper information per scopus id from scopus itself
+    :param long_version: True if all papers are regarded, False if only 5
     :param library_name: name of the scraped library
     """
 
@@ -129,7 +145,7 @@ def print_to_csv(file_name: str, df: pd.DataFrame):
         df.to_csv(file_path, sep=";", encoding="utf-8", index=False, header=True)
 
 
-def create_continuous_list():
+def __create_continuous_list():
     """
     Reads all .csv or .CSV files in a folder, concatenates them,
     ensures 'used' column exists, and fills missing entries with NaN.
