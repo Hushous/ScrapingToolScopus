@@ -15,6 +15,9 @@ def prepare_df():
     """
     folder_path = constants_scopus_tool.FOLDER_PATH_TABLE_DESIGN_INPUT
 
+    # create parent folder on the fly
+    os.makedirs(folder_path, exist_ok=True)
+
     csv_files = [f for f in os.listdir(folder_path) if f.lower().endswith(".csv")]
 
     if not csv_files:
@@ -109,11 +112,7 @@ def kind_of_artifact():
     )
 
     # Rotate x-axis labels for readability
-    ax.set_xticklabels(
-        ax.get_xticklabels(),
-        rotation=45,
-        ha="right",
-    )
+    plt.setp(ax.get_xticklabels(), rotation=45, ha="right")
 
     # Titles and labels
     plt.title(
@@ -144,8 +143,16 @@ def kind_of_artifact():
         )
 
     plt.tight_layout()
+
+    folder_name = constants_scopus_tool.FOLDER_PATH_TABLE_DESIGN_OUTPUT
+    file_name = constants_scopus_tool.FILE_NAME_ARTIFACT_TABLE
+    file_path = os.path.join(folder_name, file_name)
+
+    # create parent folder on the fly
+    os.makedirs(os.path.dirname(file_path), exist_ok=True)
+
     plt.savefig(
-        "table_design/output/finds_of_artifacts.png",
+        file_path,
         dpi=300,
         bbox_inches="tight",
     )
@@ -226,9 +233,13 @@ def matrix_generating():
         ha="right",
     )
 
+    folder_name = constants_scopus_tool.FOLDER_PATH_TABLE_DESIGN_OUTPUT
+    file_name = constants_scopus_tool.FILE_NAME_MATRIX
+    file_path = os.path.join(folder_name, file_name)
+
     plt.tight_layout()
     plt.savefig(
-        "table_design/output/heatmap.png",
+        file_path,
         dpi=300,
         bbox_inches="tight",
     )

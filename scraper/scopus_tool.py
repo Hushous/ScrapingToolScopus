@@ -14,8 +14,11 @@ def create_all_paper_csv(long_version: bool, databases: list):
     :param databases: list of all databases name (used in names of .csv data)
     :param long_version:
     """
+
+    print("Start Scopus Scraping Process")
     scrape_by_search_string(long_version)
 
+    print("Start Processing .csv Data")
     for item in databases:
         scrape_papers_per_id(item, long_version)
 
@@ -73,11 +76,14 @@ def scrape_papers_per_id(library_name: str, long_version: bool):
 
     key = os.getenv("Key", "No Key established in .env")
 
-    input_file_path = constants_scopus_tool.FILEPATH_INPUT_OTHER_SEARCH + "/"
-    filename = constants_scopus_tool.FILENAME_BASE_SEARCH + library_name + ".csv"
-    input = input_file_path + filename
+    input_file_path = constants_scopus_tool.FILEPATH_INPUT_OTHER_SEARCH
+    file_name = constants_scopus_tool.FILENAME_BASE_SEARCH + library_name + ".csv"
+    file_path = os.path.join(input_file_path, file_name)
 
-    ids = pd.read_csv(input, sep=";", encoding="utf-8")
+    # create parent folder on the fly
+    os.makedirs(input_file_path, exist_ok=True)
+
+    ids = pd.read_csv(file_path, sep=";", encoding="utf-8")
 
     # only use 5 papers for testing purposes
     if not long_version:
@@ -135,12 +141,11 @@ def print_to_csv(file_name: str, df: pd.DataFrame):
         if not file_name.lower().endswith(".csv"):
             file_name += ".csv"
 
-        file_path = (
-            constants_scopus_tool.FILEPATH_OUTPUT_SCOPUS_SEARCH + "/" + file_name
-        )
+        folder_name = constants_scopus_tool.FILEPATH_OUTPUT_SCOPUS_SEARCH
+        file_path = os.path.join(folder_name, file_name)
 
         # create parent folder on the fly
-        os.makedirs(os.path.dirname(file_path), exist_ok=True)
+        os.makedirs(file_path, exist_ok=True)
 
         df.to_csv(file_path, sep=";", encoding="utf-8", index=False, header=True)
 

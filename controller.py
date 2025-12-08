@@ -42,6 +42,6 @@ def create_tables():
     table_designer.create_conversion_table()
 
 
-scrape_paper_information(False)
-create_bib_tex()
-create_tables()
+# scrape_paper_information(False)
+# create_bib_tex()
+# create_tables()

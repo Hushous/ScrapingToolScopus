@@ -28,5 +28,7 @@ FOLDER_PATH_REFERENCES = "bib_tex/output"
 # Table Designer
 FOLDER_PATH_TABLE_DESIGN_INPUT = "table_design/input"
 FOLDER_PATH_TABLE_DESIGN_OUTPUT = "table_design/output"
+FILE_NAME_ARTIFACT_TABLE = "finds_of_artifacts"
+FILE_NAME_MATRIX = "heatmap"
 FILE_NAME_CONVERSION_TABLE_1 = "conv_table_1.png"
 FILE_NAME_CONVERSION_TABLE_2 = "conv_table_2.png"
