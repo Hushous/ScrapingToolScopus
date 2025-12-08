@@ -1,4 +1,4 @@
-number;identifier;channel;push_notifications;integrated_ai;ai_chat_bot;use_government_data;use_low_cost_sensors;interpretation_capabilities;integration_of_maps;downloadable_data;upload_of_additional_data
+number;identifier;channel;push_notifications;integrated_ai;ai_chat_bot;use_government_data;use_low_cost_sensors;interpretation_capabilities;integration_of_maps;downloadable_data;upload_of_additional_data;open_access
 79;85094132318;Mobile App;True;True;False;True;True;True;True;True;True;False
 80;105013463140;Web Platform;False;True;False;True;True;True;True;True;True;False
 81;85112266275;Scientific Study & Methodology;False;False;False;True;True;True;True;False;True;False

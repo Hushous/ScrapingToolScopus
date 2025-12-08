@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 from bib_tex import bib_tex_creation
 from constants import constants_scopus_tool
 from scraper import scopus_tool
+from table_design import table_designer
 
 load_dotenv()
 
@@ -30,5 +31,17 @@ def create_bib_tex():
     bib_tex_creation.create_bib_from_records()
 
 
-# scrape_paper_information(False)
-# create_bib_tex()
+def create_tables():
+    """
+    creates all 3 kinds of tables/charts for the review.
+    requires at least one handcrafted csv with requirements engineered
+    only use for specific project
+    """
+    table_designer.kind_of_artifact()
+    table_designer.matrix_generating()
+    table_designer.create_conversion_table()
+
+
+scrape_paper_information(False)
+create_bib_tex()
+create_tables()
