@@ -1,28 +1,28 @@
 number;identifier;channel;push_notifications;integrated_ai;ai_chat_bot;use_government_data;use_low_cost_sensors;interpretation_capabilities;integration_of_maps;downloadable_data;upload_of_additional_data;open_access
-52;85076286169;None;False;False;False;False;False;False;False;False;False;True
+52;85076286169;No Channel;False;False;False;False;False;False;False;False;False;True
 53;105001645826;Web Platform;False;False;False;True;False;True;True;False;False
-54;105018475633;None;False;True;False;True;False;True;True;False;False
+54;105018475633;No Channel;False;True;False;True;False;True;True;False;False
 55;85099743101;Mobile App;False;False;False;False;True;True;True;False;False
-56;105018008852;None;False;False;False;False;False;False;False;False;False
+56;105018008852;No Channel;False;False;False;False;False;False;False;False;False
 57;105017121596;Scientific Study & Methodology;False;False;False;False;True;True;False;False;False
-58;105002303070;None;False;True;False;False;True;False;True;False;False
-59;105012163410;None;False;False;False;False;False;False;False;False;False
+58;105002303070;No Channel;False;True;False;False;True;False;True;False;False
+59;105012163410;No Channel;False;False;False;False;False;False;False;False;False
 60;105009015886;Web Platform & Mobile App;False;False;False;False;True;True;True;False;True
 61;105008907848;Game/AR/VR;False;False;False;False;False;True;True;False;False
-62;105001275004;None;False;False;False;False;True;False;False;False;False
+62;105001275004;No Channel;False;False;False;False;True;False;False;False;False
 63;105007806566;Game/AR/VR;False;False;False;True;False;True;False;False;False
-64;105003973618;None;False;False;False;False;False;False;False;False;False
+64;105003973618;No Channel;False;False;False;False;False;False;False;False;False
 65;85196863937;Web Platform;False;False;False;True;True;True;True;False;False
 66;85199590093;Web Platform;False;True;False;False;True;True;True;False;True
 67;85194859559;Hardware & IoT;False;False;False;False;True;True;False;False;False
-68;85214919883;None;False;False;False;False;False;False;False;False;False
+68;85214919883;No Channel;False;False;False;False;False;False;False;False;False
 69;85150755422;Web Platform;False;False;False;False;True;True;True;True;True
 70;85209657547;Web Platform & Mobile App;False;False;False;False;True;True;False;False;True
 71;85071615346;Web Platform;False;False;False;False;True;True;True;False;True
 72;85179005476;Web Platform;False;False;False;False;True;True;False;False;True
-73;85153567489;None;False;True;False;True;True;True;True;True;True
-74;85207286282;None;False;False;False;False;True;False;False;False;False
-75;85104947027;None;False;False;False;False;False;False;False;False;False
-76;85196152325;None;False;True;False;True;True;True;True;False;False
+73;85153567489;No Channel;False;True;False;True;True;True;True;True;True
+74;85207286282;No Channel;False;False;False;False;True;False;False;False;False
+75;85104947027;No Channel;False;False;False;False;False;False;False;False;False
+76;85196152325;No Channel;False;True;False;True;True;True;True;False;False
 77;85203819137;Mobile App;True;False;False;False;True;True;False;False;True
-78;85099794565;None;False;True;False;True;True;True;True;False;False
+78;85099794565;No Channel;False;True;False;True;True;True;True;False;False

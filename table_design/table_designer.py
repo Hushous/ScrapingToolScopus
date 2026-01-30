@@ -54,6 +54,8 @@ def prepare_df():
         inplace=True,
     )
 
+    df = df.drop_duplicates(subset=["identifier"])
+
     cols = sorted(cols)
     # Convert "True"/"False" strings to actual booleans
     df[cols] = df[cols].replace(
@@ -269,7 +271,7 @@ def create_conversion_table():
     df = df[["number", "title"]]
     df = df.rename(columns={"number": "Index", "title": "Paper Title"})
 
-    df = df.dropna()
+    # df = df.dropna()
 
     # split 50:50
     n = len(df) // 2
@@ -329,4 +331,4 @@ def __export_df_png(df, file_path):
         )
 
     # --- Export WITHOUT the index ---
-    dfi.export(styled.hide(axis="index"), file_path)
+    dfi.export(styled.hide(axis="index"), file_path, max_rows=110)

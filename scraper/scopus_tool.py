@@ -145,7 +145,7 @@ def print_to_csv(file_name: str, df: pd.DataFrame):
         file_path = os.path.join(folder_name, file_name)
 
         # create parent folder on the fly
-        os.makedirs(file_path, exist_ok=True)
+        os.makedirs(folder_name, exist_ok=True)
 
         df.to_csv(file_path, sep=";", encoding="utf-8", index=False, header=True)
 
